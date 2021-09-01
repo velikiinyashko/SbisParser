@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SbisParser", "SbisParser\SbisParser.csproj", "{24565C0F-E647-4D3D-BF84-858112AD9C83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24565C0F-E647-4D3D-BF84-858112AD9C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24565C0F-E647-4D3D-BF84-858112AD9C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24565C0F-E647-4D3D-BF84-858112AD9C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24565C0F-E647-4D3D-BF84-858112AD9C83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1651278-15BE-4688-ABD0-B2D8111FDFB3}
+	EndGlobalSection
+EndGlobal

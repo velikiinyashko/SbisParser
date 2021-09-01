@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Файл">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="СвУчДокОбор">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="СвОЭДОтпр">
+                <xs:complexType>
+                  <xs:attribute name="ИННЮЛ" type="xs:string" use="required" />
+                  <xs:attribute name="ИдЭДО" type="xs:string" use="required" />
+                  <xs:attribute name="НаимОрг" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="ИдОтпр" type="xs:string" use="required" />
+            <xs:attribute name="ИдПол" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Документ">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="СвСчФакт">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="СвПрод">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ИдСв">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СвЮЛУч">
+                                  <xs:complexType>
+                                    <xs:attribute name="ИННЮЛ" type="xs:string" use="required" />
+                                    <xs:attribute name="КПП" type="xs:string" use="required" />
+                                    <xs:attribute name="НаимОрг" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Адрес">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="АдрРФ">
+                                  <xs:complexType>
+                                    <xs:attribute name="Город" type="xs:string" use="required" />
+                                    <xs:attribute name="Дом" type="xs:string" use="required" />
+                                    <xs:attribute name="Индекс" type="xs:unsignedInt" use="required" />
+                                    <xs:attribute name="КодРегион" type="xs:unsignedByte" use="required" />
+                                    <xs:attribute name="Корпус" type="xs:string" use="required" />
+                                    <xs:attribute name="Улица" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Контакт">
+                            <xs:complexType>
+                              <xs:attribute name="Тлф" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="БанкРекв">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СвБанк">
+                                  <xs:complexType>
+                                    <xs:attribute name="БИК" type="xs:unsignedInt" use="required" />
+                                    <xs:attribute name="КорСчет" type="xs:integer" use="required" />
+                                    <xs:attribute name="НаимБанк" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="НомерСчета" type="xs:integer" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="ОКПО" type="xs:unsignedInt" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ГрузОт">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ГрузОтпр">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="ИдСв">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="СвЮЛУч">
+                                        <xs:complexType>
+                                          <xs:attribute name="ИННЮЛ" type="xs:string" use="required" />
+                                          <xs:attribute name="КПП" type="xs:string" use="required" />
+                                          <xs:attribute name="НаимОрг" type="xs:string" use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Адрес">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="АдрРФ">
+                                        <xs:complexType>
+                                          <xs:attribute name="Город" type="xs:string" use="required" />
+                                          <xs:attribute name="Дом" type="xs:string" use="required" />
+                                          <xs:attribute name="Индекс" type="xs:unsignedInt" use="required" />
+                                          <xs:attribute name="КодРегион" type="xs:unsignedByte" use="required" />
+                                          <xs:attribute name="Улица" type="xs:string" use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ГрузПолуч">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ИдСв">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СвЮЛУч">
+                                  <xs:complexType>
+                                    <xs:attribute name="ИННЮЛ" type="xs:string" use="required" />
+                                    <xs:attribute name="КПП" type="xs:string" use="required" />
+                                    <xs:attribute name="НаимОрг" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Адрес">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="АдрРФ">
+                                  <xs:complexType>
+                                    <xs:attribute name="Город" type="xs:string" use="required" />
+                                    <xs:attribute name="Дом" type="xs:string" use="required" />
+                                    <xs:attribute name="Индекс" type="xs:unsignedInt" use="required" />
+                                    <xs:attribute name="КодРегион" type="xs:unsignedByte" use="required" />
+                                    <xs:attribute name="Корпус" type="xs:string" use="required" />
+                                    <xs:attribute name="Улица" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="БанкРекв">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СвБанк">
+                                  <xs:complexType>
+                                    <xs:attribute name="БИК" type="xs:unsignedInt" use="required" />
+                                    <xs:attribute name="КорСчет" type="xs:integer" use="required" />
+                                    <xs:attribute name="НаимБанк" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="НомерСчета" type="xs:integer" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="ОКПО" type="xs:unsignedInt" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="СвПокуп">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ИдСв">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СвЮЛУч">
+                                  <xs:complexType>
+                                    <xs:attribute name="ИННЮЛ" type="xs:string" use="required" />
+                                    <xs:attribute name="КПП" type="xs:string" use="required" />
+                                    <xs:attribute name="НаимОрг" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Адрес">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="АдрРФ">
+                                  <xs:complexType>
+                                    <xs:attribute name="Город" type="xs:string" use="required" />
+                                    <xs:attribute name="Дом" type="xs:string" use="required" />
+                                    <xs:attribute name="Индекс" type="xs:unsignedInt" use="required" />
+                                    <xs:attribute name="КодРегион" type="xs:unsignedByte" use="required" />
+                                    <xs:attribute name="Улица" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Контакт">
+                            <xs:complexType>
+                              <xs:attribute name="Тлф" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="БанкРекв">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СвБанк">
+                                  <xs:complexType>
+                                    <xs:attribute name="БИК" type="xs:unsignedInt" use="required" />
+                                    <xs:attribute name="КорСчет" type="xs:integer" use="required" />
+                                    <xs:attribute name="НаимБанк" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="НомерСчета" type="xs:integer" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="ОКПО" type="xs:unsignedInt" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ДопСвФХЖ1">
+                      <xs:complexType>
+                        <xs:attribute name="КурсВал" type="xs:unsignedByte" use="required" />
+                        <xs:attribute name="НаимОКВ" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ИнфПолФХЖ1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" name="ТекстИнф">
+                            <xs:complexType>
+                              <xs:attribute name="Значен" type="xs:string" use="required" />
+                              <xs:attribute name="Идентиф" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="ДатаСчФ" type="xs:string" use="required" />
+                  <xs:attribute name="КодОКВ" type="xs:unsignedShort" use="required" />
+                  <xs:attribute name="НомерСчФ" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТаблСчФакт">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="СведТов">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Акциз">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="БезАкциз" type="xs:string" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="СумНал">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СумНал" type="xs:decimal" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ДопСведТов">
+                            <xs:complexType>
+                              <xs:attribute name="КодТов" type="xs:string" use="required" />
+                              <xs:attribute name="КрНаимСтрПр" type="xs:string" use="required" />
+                              <xs:attribute name="НаимЕдИзм" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ИнфПолФХЖ2">
+                            <xs:complexType>
+                              <xs:attribute name="Значен" type="xs:string" use="required" />
+                              <xs:attribute name="Идентиф" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="КолТов" type="xs:decimal" use="required" />
+                        <xs:attribute name="НаимТов" type="xs:string" use="required" />
+                        <xs:attribute name="НалСт" type="xs:string" use="required" />
+                        <xs:attribute name="НомСтр" type="xs:unsignedInt" use="required" />
+                        <xs:attribute name="ОКЕИ_Тов" type="xs:unsignedShort" use="required" />
+                        <xs:attribute name="СтТовБезНДС" type="xs:decimal" use="required" />
+                        <xs:attribute name="СтТовУчНал" type="xs:decimal" use="required" />
+                        <xs:attribute name="ЦенаТов" type="xs:decimal" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ВсегоОпл">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="СумНалВсего">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="СумНал" type="xs:decimal" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="КолНеттоВс" type="xs:decimal" />
+                        </xs:sequence>
+                        <xs:attribute name="СтТовБезНДСВсего" type="xs:decimal" use="required" />
+                        <xs:attribute name="СтТовУчНалВсего" type="xs:decimal" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="СвПродПер">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="СвПер">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ОснПер">
+                            <xs:complexType>
+                              <xs:attribute name="ДатаОсн" type="xs:string" use="required" />
+                              <xs:attribute name="ДопСвОсн" type="xs:string" use="required" />
+                              <xs:attribute name="НаимОсн" type="xs:string" use="required" />
+                              <xs:attribute name="НомОсн" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="СвЛицПер">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="РабОргПрод">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="ФИО">
+                                        <xs:complexType>
+                                          <xs:attribute name="Имя" type="xs:string" use="required" />
+                                          <xs:attribute name="Отчество" type="xs:string" use="required" />
+                                          <xs:attribute name="Фамилия" type="xs:string" use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="Должность" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="СодОпер" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Подписант">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ЮЛ">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ФИО">
+                            <xs:complexType>
+                              <xs:attribute name="Имя" type="xs:string" use="required" />
+                              <xs:attribute name="Отчество" type="xs:string" use="required" />
+                              <xs:attribute name="Фамилия" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Должн" type="xs:string" use="required" />
+                        <xs:attribute name="ИННЮЛ" type="xs:string" use="required" />
+                        <xs:attribute name="НаимОрг" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="ОблПолн" type="xs:unsignedByte" use="required" />
+                  <xs:attribute name="ОснПолн" type="xs:string" use="required" />
+                  <xs:attribute name="Статус" type="xs:unsignedByte" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="ВремИнфПр" type="xs:string" use="required" />
+            <xs:attribute name="ДатаИнфПр" type="xs:string" use="required" />
+            <xs:attribute name="КНД" type="xs:unsignedInt" use="required" />
+            <xs:attribute name="НаимДокОпр" type="xs:string" use="required" />
+            <xs:attribute name="НаимЭконСубСост" type="xs:string" use="required" />
+            <xs:attribute name="ПоФактХЖ" type="xs:string" use="required" />
+            <xs:attribute name="Функция" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="ВерсПрог" type="xs:string" use="required" />
+      <xs:attribute name="ВерсФорм" type="xs:decimal" use="required" />
+      <xs:attribute name="ИдФайл" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
