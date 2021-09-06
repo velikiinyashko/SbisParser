@@ -9,6 +9,6 @@ namespace SbisParser.Interfaces
 {
     public interface IBaseService
     {
-        Task<bool> WriteDataToBase(string TableName, bool IsCreateTable, DataTable Data);
+        Task<bool> WriteDataToBase(bool IsCreateTable, DataTable Data);
     }
 }

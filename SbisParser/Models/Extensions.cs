@@ -10,10 +10,11 @@ namespace SbisParser.Models
 {
     public static class Extensions
     {
-        public static DataTable ToDataTable<T>(this List<T> self)
+        public static DataTable ToDataTable<T>(this List<T> self, string tableName)
         {
             var properties = typeof(T).GetProperties();
             DataTable dt = new();
+            dt.TableName = tableName;
             foreach (var info in properties)
                 dt.Columns.Add(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType);
             foreach (var entity in self)

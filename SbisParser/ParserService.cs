@@ -61,10 +61,10 @@ namespace SbisParser
                 if (_options.WriteToBase)
                 {
                     if (_invoices.Count != 0)
-                        _writtenInvoices = await _service.WriteDataToBase(_options.NameTableDataBase.invoiceTable, _options.NameTableDataBase.IsCreateTable, _invoices.ToDataTable());
+                        _writtenInvoices = await _service.WriteDataToBase(_options.NameTableDataBase.IsCreateTable, _invoices.ToDataTable(_options.NameTableDataBase.invoiceTable));
 
                     if (_invoiceItems.Count != 0)
-                        _writtenInvoiceItems = await _service.WriteDataToBase(_options.NameTableDataBase.invoiceItemTable, _options.NameTableDataBase.IsCreateTable, _invoiceItems.ToDataTable());
+                        _writtenInvoiceItems = await _service.WriteDataToBase(_options.NameTableDataBase.IsCreateTable, _invoiceItems.ToDataTable(_options.NameTableDataBase.invoiceItemTable));
                 }
             }
             catch (ArgumentException ex)
@@ -99,8 +99,10 @@ namespace SbisParser
                                 {
                                     DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
                                     Number = obj.Документ.СвСчФакт.НомерСчФ,
-                                    INNSupplier = obj.Документ.СвСчФакт.ГрузОт != null ? obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ? obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString(),
                                     INNOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ? obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : null,
+                                    KPPOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ? obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.КПП.ToString() : null,
+                                    INNSupplier = obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ? obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString(),
+                                    KPPSupplier = obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ? obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.КПП.ToString() : obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.КПП.ToString(),
                                     NumDogovor = obj.Документ.СвПродПер != null ? obj.Документ.СвПродПер.СвПер.ОснПер.НомОсн : null,
                                     SumExtVat = obj.Документ.ТаблСчФакт.ВсегоОпл.СтТовБезНДСВсего,
                                     SumIncVat = obj.Документ.ТаблСчФакт.ВсегоОпл.СтТовУчНалВсего,
@@ -123,29 +125,86 @@ namespace SbisParser
                                     _invoiceItems.Add(invoiceItem);
                                 }
                             }
+                            else if (obj.Документ.СвСчФакт.СвПрод != null)
+                            {
+                                InvoiceModel invoice = new()
+                                {
+                                    DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
+                                    Number = obj.Документ.СвСчФакт.НомерСчФ,
+                                    INNOrg = obj.Документ.СвСчФакт.СвПокуп != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : null : null,
+                                    KPPOrg = obj.Документ.СвСчФакт.СвПокуп != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв.СвЮЛУч.КПП.ToString() : null : null,
+                                    INNSupplier = obj.Документ.СвСчФакт.СвПрод.ИдСв != null ? obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : null,
+                                    KPPSupplier = obj.Документ.СвСчФакт.СвПрод.ИдСв != null ? obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.КПП.ToString() : null,
+                                    NumDogovor = obj.Документ.СвПродПер != null ? obj.Документ.СвПродПер.СвПер.ОснПер.НомОсн : null,
+                                    SumExtVat = obj.Документ.ТаблСчФакт.ВсегоОпл.СтТовБезНДСВсего,
+                                    SumIncVat = obj.Документ.ТаблСчФакт.ВсегоОпл.СтТовУчНалВсего,
+                                };
+                                _invoices.Add(invoice);
+
+                                foreach (var item in obj.Документ.ТаблСчФакт.СведТов)
+                                {
+                                    InvoiceItemModel invoiceItem = new()
+                                    {
+                                        Invoice = obj.Документ.СвСчФакт.НомерСчФ,
+                                        Title = item.НаимТов,
+                                        CountItem = item.КолТов,
+                                        PriceExtVat = item.СтТовБезНДС,
+                                        PriceIncVat = item.СтТовУчНал,
+                                        Price = item.ЦенаТов,
+                                        VAT = item.НалСт != "без НДС" ? item.НалСт.Contains("%") ? int.Parse(item.НалСт.Trim('%')) : int.Parse(item.НалСт.Split('/')[0]) : 0,
+                                        VATSum = item.СумНал.СумНал
+                                    };
+                                    _invoiceItems.Add(invoiceItem);
+                                }
+                            }
                             else
                             {
-                                ++_noscf;
-                                uri.MoveFile(_options.IsIncorectDocumentsPath);
+                                try
+                                {
+                                    ++_noscf;
+                                    reader.Close();
+                                    uri.MoveFile(_options.IsIncorectDocumentsPath);
+                                }
+                                catch (Exception ex)
+                                {
+                                    _logger.LogError($"File error: {uri}\r\n Error: {ex.Message}\r\n");
+                                }
                             }
                         }
                         else
                         {
-                            ++_noscf;
-                            uri.MoveFile(_options.IsIncorectDocumentsPath);
+                            try
+                            {
+                                ++_noscf;
+                                reader.Close();
+                                uri.MoveFile(_options.IsIncorectDocumentsPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogError($"File error: {uri}\r\n Error: {ex.Message}\r\n");
+                            }
                         }
                     }
                     else
                     {
-                        ++_noscf;
-                        uri.MoveFile(_options.IsIncorectDocumentsPath);
+                        try
+                        {
+                            ++_noscf;
+                            reader.Close();
+                            uri.MoveFile(_options.IsIncorectDocumentsPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError($"File error: {uri}\r\n Error: {ex.Message}\r\n");
+                        }
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                ++_noscf;
+                _logger.LogError($"File error: {uri}\r\n Error: {ex.Message}\r\n");
                 uri.MoveFile(_options.IsIncorectDocumentsPath);
             }
         }
@@ -155,7 +214,7 @@ namespace SbisParser
             double pr = Math.Round((double)(position * 100 / count));
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(0, Console.CursorTop - 1);
-            Console.WriteLine($"Percent: [{pr}%] |Count: [{position} from {count}]|[invoice:{invoicesCount}|items:{invoicesItems}]|[Move:{noparse}][Unknown:{position - (invoicesCount + noparse)}]");
+            Console.WriteLine($"Percent: [{pr}%] | Count: [{position} from {count}]|[invoice:{invoicesCount}|items:{invoicesItems}]|[Move:{noparse}]");
             Console.ResetColor();
         }
     }

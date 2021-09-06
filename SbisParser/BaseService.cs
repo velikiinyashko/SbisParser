@@ -38,7 +38,7 @@ namespace SbisParser
             _connection = new(_connectionStringBuilder.ConnectionString);
         }
 
-        public async Task<bool> WriteDataToBase(string TableName, bool IsCreateTable, DataTable Data)
+        public async Task<bool> WriteDataToBase(bool IsCreateTable, DataTable Data)
         {
             try
             {
@@ -50,23 +50,24 @@ namespace SbisParser
                         await _connection.OpenAsync();
                         if (IsCreateTable)
                         {
-                            string sqlCommand = $"TRUNCATE TABLE {TableName}";
+                            string sqlCommand = $"TRUNCATE TABLE {Data.TableName}";
                             SqlCommand command = new(sqlCommand, _connection);
                             int req = await command.ExecuteNonQueryAsync();
-                            _logger.LogInformation($"table {TableName} is clean: {req}");
+                            _logger.LogInformation($"table {Data.TableName} is clean: {req}");
                         }
                         else
                         {
-                            string sqlCommand = $"TRUNCATE TABLE {TableName}";
+                            string sqlCommand = $"TRUNCATE TABLE {Data.TableName}";
                             SqlCommand command = new(sqlCommand, _connection);
                             int req = await command.ExecuteNonQueryAsync();
-                            _logger.LogInformation($"table {TableName} is clean: {req}");
+                            _logger.LogInformation($"table {Data.TableName} is clean: {req}");
                         }
-                        blk.DestinationTableName = TableName;
+                        blk.DestinationTableName = Data.TableName;
                         blk.EnableStreaming = true;
                         blk.BulkCopyTimeout = 0;
                         await blk.WriteToServerAsync(Data);
-                        _logger.LogInformation($"Written {Data.Rows.Count} positions in the table {TableName}");
+                        _logger.LogInformation($"Written {Data.Rows.Count} positions in the table {Data.TableName}");
+                        await _connection.CloseAsync();
                         return true;
                     }
                 }
@@ -79,6 +80,6 @@ namespace SbisParser
             }
         }
 
-        
+
     }
 }
