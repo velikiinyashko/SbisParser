@@ -171,7 +171,12 @@ namespace SbisParser
                                         PriceIncVat = item.СтТовУчНал,
                                         Price = item.ЦенаТов,
                                         VAT = item.НалСт != "без НДС" ? item.НалСт.Contains("%") ? int.Parse(item.НалСт.Trim('%')) : int.Parse(item.НалСт.Split('/')[0]) : 0,
-                                        VATSum = item.СумНал.СумНал
+                                        VATSum = item.СумНал.СумНал,
+                                        DateInvoice = invoice.DateInvoice,
+                                        INNOrg = invoice.INNOrg,
+                                        KPPOrg = invoice.KPPOrg,
+                                        INNSupplier = invoice.INNSupplier,
+                                        KPPSupplier = invoice.KPPSupplier
                                     };
                                     _invoiceItems.Add(invoiceItem);
                                 }
