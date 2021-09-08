@@ -16,5 +16,10 @@ namespace SbisParser.Models
         public decimal Price { get; set; }
         public int VAT { get; set; }
         public decimal VATSum { get; set; }
+        public string DateInvoice { get; set; }
+        public string INNOrg { get; set; }
+        public string KPPOrg { get; set; }
+        public string INNSupplier { get; set; }
+        public string KPPSupplier { get; set; }
     }
 }

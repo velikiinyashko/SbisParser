@@ -99,11 +99,25 @@ namespace SbisParser
                                 {
                                     DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
                                     Number = obj.Документ.СвСчФакт.НомерСчФ,
-                                    INNOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ? obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : null,
-                                    KPPOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ? obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.КПП.ToString() : null,
-                                    INNSupplier = obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ? obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString(),
-                                    KPPSupplier = obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ? obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.КПП.ToString() : obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.КПП.ToString(),
-                                    NumDogovor = obj.Документ.СвПродПер != null ? obj.Документ.СвПродПер.СвПер.ОснПер.НомОсн : null,
+                                    INNOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ?
+                                        obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.ИННЮЛ.ToString() :
+                                        null,
+                                    KPPOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ?
+                                        obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.КПП != null ?
+                                        obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.КПП.ToString() :
+                                        null :
+                                        null,
+                                    INNSupplier = obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ?
+                                        obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.ИННЮЛ.ToString() :
+                                        obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString(),
+                                    KPPSupplier = obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр != null ?
+                                        obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.КПП != null ?
+                                        obj.Документ.СвСчФакт.ГрузОт.ГрузОтпр.ИдСв.СвЮЛУч.КПП.ToString() :
+                                        obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.КПП.ToString() :
+                                        null,
+                                    NumDogovor = obj.Документ.СвПродПер != null ?
+                                        obj.Документ.СвПродПер.СвПер.ОснПер.НомОсн :
+                                        null,
                                     SumExtVat = obj.Документ.ТаблСчФакт.ВсегоОпл.СтТовБезНДСВсего,
                                     SumIncVat = obj.Документ.ТаблСчФакт.ВсегоОпл.СтТовУчНалВсего,
                                 };
@@ -120,7 +134,12 @@ namespace SbisParser
                                         PriceIncVat = item.СтТовУчНал,
                                         Price = item.ЦенаТов,
                                         VAT = item.НалСт != "без НДС" ? int.Parse(item.НалСт.Trim('%')) : 0,
-                                        VATSum = item.СумНал.СумНал
+                                        VATSum = item.СумНал.СумНал,
+                                        DateInvoice = invoice.DateInvoice,
+                                        INNOrg = invoice.INNOrg,
+                                        KPPOrg = invoice.KPPOrg,
+                                        INNSupplier = invoice.INNSupplier,
+                                        KPPSupplier = invoice.KPPSupplier 
                                     };
                                     _invoiceItems.Add(invoiceItem);
                                 }
