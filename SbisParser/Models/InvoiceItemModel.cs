@@ -9,6 +9,7 @@ namespace SbisParser.Models
     public class InvoiceItemModel
     {
         public string Invoice { get; set; }
+        public string IdInvoice { get; set; }
         public string Title { get; set; }
         public decimal CountItem { get; set; }
         public decimal PriceIncVat { get; set; }

@@ -8,6 +8,7 @@ namespace SbisParser.Models
 {
     public class InvoiceModel
     {
+        public string IdInvoice { get; set; }
         public string Number { get; set; }
         public string DateInvoice { get; set; }
         public string INNOrg { get; set; }

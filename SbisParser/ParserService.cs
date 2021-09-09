@@ -97,8 +97,9 @@ namespace SbisParser
                             {
                                 InvoiceModel invoice = new()
                                 {
-                                    DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
+                                    IdInvoice = obj.ИдФайл,
                                     Number = obj.Документ.СвСчФакт.НомерСчФ,
+                                    DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
                                     INNOrg = obj.Документ.СвСчФакт.ГрузПолуч != null ?
                                         obj.Документ.СвСчФакт.ГрузПолуч.ИдСв.СвЮЛУч.ИННЮЛ.ToString() :
                                         null,
@@ -128,6 +129,7 @@ namespace SbisParser
                                     InvoiceItemModel invoiceItem = new()
                                     {
                                         Invoice = obj.Документ.СвСчФакт.НомерСчФ,
+                                        IdInvoice = obj.ИдФайл,
                                         Title = item.НаимТов,
                                         CountItem = item.КолТов,
                                         PriceExtVat = item.СтТовБезНДС,
@@ -148,8 +150,9 @@ namespace SbisParser
                             {
                                 InvoiceModel invoice = new()
                                 {
-                                    DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
+                                    IdInvoice = obj.ИдФайл,
                                     Number = obj.Документ.СвСчФакт.НомерСчФ,
+                                    DateInvoice = obj.Документ.СвСчФакт.ДатаСчФ,
                                     INNOrg = obj.Документ.СвСчФакт.СвПокуп != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : null : null,
                                     KPPOrg = obj.Документ.СвСчФакт.СвПокуп != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв != null ? obj.Документ.СвСчФакт.СвПокуп.ИдСв.СвЮЛУч.КПП.ToString() : null : null,
                                     INNSupplier = obj.Документ.СвСчФакт.СвПрод.ИдСв != null ? obj.Документ.СвСчФакт.СвПрод.ИдСв.СвЮЛУч.ИННЮЛ.ToString() : null,
@@ -165,6 +168,7 @@ namespace SbisParser
                                     InvoiceItemModel invoiceItem = new()
                                     {
                                         Invoice = obj.Документ.СвСчФакт.НомерСчФ,
+                                        IdInvoice = obj.ИдФайл,
                                         Title = item.НаимТов,
                                         CountItem = item.КолТов,
                                         PriceExtVat = item.СтТовБезНДС,
