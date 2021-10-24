@@ -52,13 +52,14 @@ namespace SbisParser
             _logger.LogInformation($"Started find documents in folder: [{_options.DocumentsPath}] \r\n");
             try
             {
-                using(StreamReader str = new(_options.FileListDocument, Encoding.GetEncoding(1251)))
-                using (XmlReader reader = XmlReader.Create(str, settings))
-                {
-                    XmlSerializer serializer = new(typeof(SbisParser.FileNds.Файл));
-                    var obj = (FileNds.Файл)serializer.Deserialize(reader);
-                    files = obj.Документ.КнигаПокуп.КнПокСтр.Select(s => new ListFiles { Number = s.НомСчФПрод, Date = s.ДатаСчФПрод, Inn = s.СвПрод.СведЮЛ.ИННЮЛ.ToString(), Kpp = s.СвПрод.СведЮЛ.КПП.ToString() }).ToList();
-                }
+                if (!_options.WriteToBase)
+                    using (StreamReader str = new(_options.FileListDocument, Encoding.GetEncoding(1251)))
+                    using (XmlReader reader = XmlReader.Create(str, settings))
+                    {
+                        XmlSerializer serializer = new(typeof(SbisParser.FileNds.Файл));
+                        var obj = (FileNds.Файл)serializer.Deserialize(reader);
+                        files = obj.Документ.КнигаПокуп.КнПокСтр.Select(s => new ListFiles { Number = s.НомСчФПрод, Date = s.ДатаСчФПрод, Inn = s.СвПрод.СведЮЛ.ИННЮЛ.ToString(), Kpp = s.СвПрод.СведЮЛ.КПП.ToString() }).ToList();
+                    }
                 var getfiles = Directory.Exists(_options.DocumentsPath) == true ? Directory.GetFiles(_options.DocumentsPath, _options.MaskFile, SearchOption.AllDirectories) : throw new ArgumentException($"Directory is not found");
 
                 _logger.LogInformation($"Found {getfiles.Length} files");
@@ -256,23 +257,25 @@ namespace SbisParser
 
         public void MovePdf(string uri, InvoiceModel invoice)
         {
-            var IsNeedPdf = files.FirstOrDefault(q => q.Number == invoice.Number & q.Inn == invoice.INNSupplier & q.Kpp == invoice.KPPSupplier & q.Date == invoice.DateInvoice);
-            if (IsNeedPdf != null)
+            if (!_options.WriteToBase)
             {
-                var directoryfile = Path.GetDirectoryName(uri);
-                var pdf = Directory.GetFiles($"{directoryfile}\\PDF", "*.pdf");
-                if (!Directory.Exists(_options.PdfPath))
-                    Directory.CreateDirectory(_options.PdfPath);
-                foreach (var file in pdf)
+                var IsNeedPdf = files.FirstOrDefault(q => q.Number == invoice.Number & q.Inn == invoice.INNSupplier & q.Kpp == invoice.KPPSupplier & q.Date == invoice.DateInvoice);
+                if (IsNeedPdf != null)
                 {
-                    var filePath = $"{_options.PdfPath}\\{invoice.INNSupplier}_{invoice.KPPSupplier}_{invoice.Number}_{invoice.DateInvoice}";
-                    Directory.CreateDirectory(filePath);
-                    File.Copy(file, $"{filePath}\\{Path.GetFileName(file)}");
+                    var directoryfile = Path.GetDirectoryName(uri);
+                    var pdf = Directory.GetFiles($"{directoryfile}\\PDF", "*.pdf");
+                    if (!Directory.Exists(_options.PdfPath))
+                        Directory.CreateDirectory(_options.PdfPath);
+                    foreach (var file in pdf)
+                    {
+                        var filePath = $"{_options.PdfPath}\\{invoice.INNSupplier}_{invoice.KPPSupplier}_{invoice.Number}_{invoice.DateInvoice}";
+                        Directory.CreateDirectory(filePath);
+                        File.Copy(file, $"{filePath}\\{Path.GetFileName(file)}");
+                    }
+                    MoveFiles.Add(invoice.IdInvoice);
+                    files.Remove(IsNeedPdf);
                 }
-                MoveFiles.Add(invoice.IdInvoice);
-                files.Remove(IsNeedPdf);
             }
-
         }
 
         public void PercentLog(int count, int position, int invoicesCount, int invoicesItems, int noparse)
