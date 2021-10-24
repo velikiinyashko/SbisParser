@@ -63,7 +63,6 @@ namespace SbisParser
                             _logger.LogInformation($"table {Data.TableName} is clean: {req}");
                         }
                         blk.DestinationTableName = Data.TableName;
-                        blk.EnableStreaming = true;
                         blk.BulkCopyTimeout = 0;
                         await blk.WriteToServerAsync(Data);
                         _logger.LogInformation($"Written {Data.Rows.Count} positions in the table {Data.TableName}");

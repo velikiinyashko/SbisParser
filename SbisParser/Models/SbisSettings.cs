@@ -16,5 +16,8 @@ namespace SbisParser.Models
         public string MaskFile { get; set; }
         public string[] Function { get; set; }
         public bool WriteToBase { get; set; }
+        public string PdfPath { get; set; }
+        public string FileListDocument { get; set; }
+        public string FileNotFindDocPath { get; set; }
     }
 }
