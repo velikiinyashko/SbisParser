@@ -31,7 +31,7 @@ namespace SbisParser
         private XmlReaderSettings settings = new();
         private int _noscf = 0;
         private readonly IHostApplicationLifetime _lifetime;
-        private List<string> MoveFiles = new();
+        private List<ListFiles> MoveFiles = new();
 
         public ParserService(ILogger<ParserService> logger, IOptions<SbisSettings> configuration, IHostApplicationLifetime lifetime, IBaseService service)
         {
@@ -59,6 +59,7 @@ namespace SbisParser
                         XmlSerializer serializer = new(typeof(SbisParser.FileNds.Файл));
                         var obj = (FileNds.Файл)serializer.Deserialize(reader);
                         files = obj.Документ.КнигаПокуп.КнПокСтр.Select(s => new ListFiles { Number = s.НомСчФПрод, Date = s.ДатаСчФПрод, Inn = s.СвПрод.СведЮЛ.ИННЮЛ.ToString(), Kpp = s.СвПрод.СведЮЛ.КПП.ToString() }).ToList();
+                        Console.WriteLine($"Count list documents: {files.Count}");
                     }
                 var getfiles = Directory.Exists(_options.DocumentsPath) == true ? Directory.GetFiles(_options.DocumentsPath, _options.MaskFile, SearchOption.AllDirectories) : throw new ArgumentException($"Directory is not found");
 
@@ -78,6 +79,7 @@ namespace SbisParser
                         _writtenInvoiceItems = await _service.WriteDataToBase(_options.NameTableDataBase.IsCreateTable, _invoiceItems.ToDataTable(_options.NameTableDataBase.invoiceItemTable));
                 }
                 await File.WriteAllTextAsync(_options.FileNotFindDocPath, System.Text.Json.JsonSerializer.Serialize<List<ListFiles>>(files, new System.Text.Json.JsonSerializerOptions() { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }), encoding: Encoding.UTF8);
+                await File.WriteAllTextAsync(_options.FileFindDocPath, System.Text.Json.JsonSerializer.Serialize<List<ListFiles>>(MoveFiles, new System.Text.Json.JsonSerializerOptions() { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }), encoding: Encoding.UTF8);
 
             }
             catch (ArgumentException ex)
@@ -270,9 +272,9 @@ namespace SbisParser
                     {
                         var filePath = $"{_options.PdfPath}\\{invoice.INNSupplier}_{invoice.KPPSupplier}_{invoice.Number}_{invoice.DateInvoice}";
                         Directory.CreateDirectory(filePath);
-                        File.Copy(file, $"{filePath}\\{Path.GetFileName(file)}");
+                        File.Copy(file, $"{filePath}\\{Path.GetFileName(file)}", true);
                     }
-                    MoveFiles.Add(invoice.IdInvoice);
+                    MoveFiles.Add(IsNeedPdf);
                     files.Remove(IsNeedPdf);
                 }
             }

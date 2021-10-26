@@ -27,12 +27,12 @@ namespace SbisParser.Models
 
         public static void MoveFile(this string file, string toMove)
         {
-            if (File.Exists(file))
+            if (!File.Exists(file))
             {
                 if (!Directory.Exists(toMove))
                     Directory.CreateDirectory(toMove);
                 string fileName = Path.GetFileName(file);
-                File.Move(file, $"{toMove}\\{fileName}");
+                File.Copy(file, $"{toMove}\\{fileName}", true);
             }
         }
 

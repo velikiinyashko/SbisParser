@@ -19,5 +19,6 @@ namespace SbisParser.Models
         public string PdfPath { get; set; }
         public string FileListDocument { get; set; }
         public string FileNotFindDocPath { get; set; }
+        public string FileFindDocPath { get; set; }
     }
 }
