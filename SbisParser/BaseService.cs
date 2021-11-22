@@ -56,9 +56,6 @@ namespace SbisParser
                             _logger.LogInformation($"table {Data.TableName} is clean: {req}");
                         }
 
-                        for (int i = 0; i < Data.Columns.Count; i++)
-                            Data.Columns[0].DataType = typeof(string);
-
                         //else
                         //{
                         //    string sqlCommand = $"TRUNCATE TABLE {Data.TableName}";

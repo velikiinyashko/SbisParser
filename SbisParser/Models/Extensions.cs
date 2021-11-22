@@ -13,12 +13,15 @@ namespace SbisParser.Models
         public static DataTable ToDataTable<T>(this List<T> self, string tableName)
         {
             var properties = typeof(T).GetProperties();
+
             DataTable dt = new();
             dt.TableName = tableName;
+
             foreach (var info in properties)
-                dt.Columns.Add(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType);
+                dt.Columns.Add(info.Name, typeof(string));
+
             foreach (var entity in self)
-                dt.Rows.Add(properties.Select(p => p.GetValue(entity)).ToArray());
+                dt.Rows.Add(properties.Select(p => p.GetValue(entity)?.ToString()).ToArray());
 
             return dt;
         }
