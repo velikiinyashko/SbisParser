@@ -58,7 +58,21 @@ namespace SbisParser
                     {
                         XmlSerializer serializer = new(typeof(SbisParser.FileNds.Файл));
                         var obj = (FileNds.Файл)serializer.Deserialize(reader);
-                        files = obj.Документ.КнигаПокуп.КнПокСтр.Select(s => new ListFiles { Number = s.НомСчФПрод, Date = s.ДатаСчФПрод, Inn = s.СвПрод.СведЮЛ.ИННЮЛ.ToString(), Kpp = s.СвПрод.СведЮЛ.КПП.ToString() }).ToList();
+                        files = obj.Документ.КнигаПокуп.КнПокСтр
+                            .Where(s =>
+                                s?.НомСчФПрод != null &&
+                                s?.ДатаСчФПрод != null &&
+                                s?.СвПрод?.СведЮЛ?.ИННЮЛ != null &&
+                                s?.СвПрод?.СведЮЛ?.КПП != null)
+                            .Select(s => 
+                                new ListFiles 
+                                { 
+                                    Number = s.НомСчФПрод, 
+                                    Date = s.ДатаСчФПрод, 
+                                    Inn = s.СвПрод.СведЮЛ.ИННЮЛ.ToString(), 
+                                    Kpp = s.СвПрод.СведЮЛ.КПП.ToString() })
+                            .ToList();
+
                         Console.WriteLine($"Count list documents: {files.Count}");
                     }
                 var getfiles = Directory.Exists(_options.DocumentsPath) == true ? Directory.GetFiles(_options.DocumentsPath, _options.MaskFile, SearchOption.AllDirectories) : throw new ArgumentException($"Directory is not found");
