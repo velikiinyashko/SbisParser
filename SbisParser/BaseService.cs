@@ -55,13 +55,18 @@ namespace SbisParser
                             int req = await command.ExecuteNonQueryAsync();
                             _logger.LogInformation($"table {Data.TableName} is clean: {req}");
                         }
-                        else
-                        {
-                            string sqlCommand = $"TRUNCATE TABLE {Data.TableName}";
-                            SqlCommand command = new(sqlCommand, _connection);
-                            int req = await command.ExecuteNonQueryAsync();
-                            _logger.LogInformation($"table {Data.TableName} is clean: {req}");
-                        }
+
+                        for (int i = 0; i < Data.Columns.Count; i++)
+                            Data.Columns[0].DataType = typeof(string);
+
+                        //else
+                        //{
+                        //    string sqlCommand = $"TRUNCATE TABLE {Data.TableName}";
+                        //    SqlCommand command = new(sqlCommand, _connection);
+                        //    int req = await command.ExecuteNonQueryAsync();
+                        //    _logger.LogInformation($"table {Data.TableName} is clean: {req}");
+                        //}
+
                         blk.DestinationTableName = Data.TableName;
                         blk.BulkCopyTimeout = 0;
                         await blk.WriteToServerAsync(Data);
